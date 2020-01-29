@@ -56,5 +56,38 @@ while True:
                         render_l.connect(splitter.outputs[0])
                         render_r.connect(splitter.outputs[1])
                 else:
+while True:
+        buttonstate=GPIO.input(3)
+        input_state=GPIO.input(3)
+        if buttonstate != lastbuttonstate:
+                presscount=presscount+1
+                if presscount%2==0:
+
+                        camera.outputs[0].framerate=25
+                        p.dest_rect = mmal.MMAL_RECT_T(0,35,400,480)
+                        mp = camera.control.params[mmal.MMAL_PARAMETER_COLOUR_EFFECT]
+
+
+                        render_l.inputs[0].params[mmal.MMAL_PARAMETER_DISPLAYREGION]=p
+
+
+                        p.dest_rect = mmal.MMAL_RECT_T(400,35,400,480)
+                        render_r.inputs[0].params[mmal.MMAL_PARAMETER_DISPLAYREGION]=p
+                        splitter.connect(camera.outputs[0])
+                        render_l.connect(splitter.outputs[0])
+                        render_r.connect(splitter.outputs[1])
+                else:
+                        camera.outputs[0].framerate=70
+                        p.dest_rect = mmal.MMAL_RECT_T(0,35,400,480)
+                        render_l.inputs[0].params[mmal.MMAL_PARAMETER_DISPLAYREGION]=p
+                        p.dest_rect = mmal.MMAL_RECT_T(400,35,400,480)
+                        render_r.inputs[0].params[mmal.MMAL_PARAMETER_DISPLAYREGION]=p
+                        splitter.connect(camera.outputs[0])
+                        render_l.connect(splitter.outputs[0])
+                        render_r.connect(splitter.outputs[1])
+
+        lastbuttonstate=buttonstate
+pause()
+
 
 
