@@ -1,3 +1,24 @@
+
+from picamera import mmalobj as mo, mmal
+from picamera import PiCamera
+
+from signal import pause
+import RPi.GPIO as GPIO
+import time
+
+
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(3,GPIO.IN)
+
+camera = mo.MMALCamera()
+splitter = mo.MMALSplitter()
+render_l = mo.MMALRenderer()
+render_r = mo.MMALRenderer()
+
+camera.control.params[mmal.MMAL_PARAMETER_BRIGHTNESS] = .625
+camera.control.params[mmal.MMAL_PARAMETER_ISO]=800
+mp = camera.control.params[mmal.MMAL_PARAMETER_COLOUR_EFFECT]
 mmal.MMAL_PARAM_IMAGEFX_COLOURPOINT = 0
 clp = mmal.MMAL_PARAM_IMAGEFX_COLOURPOINT
 camera.image_effect = clp
